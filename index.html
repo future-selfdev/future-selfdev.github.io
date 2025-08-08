@@ -1,1 +1,5 @@
-'dasdda'6
+<script type="text/javascript">
+  ym(YOUR_COUNTER_ID, 'getClientID', function(clientId) {
+    navigator.sendBeacon('/send-goal', JSON.stringify({ clientId }));
+  });
+</script>
