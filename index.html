@@ -1,21 +1,38 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
   <title>Redirect...</title>
-  <script src="https://mc.yandex.ru/metrika/tag.js"></script>
-  <script>
-    const BOT_USERNAME = 'DkptchStageBot';
-    const COUNTER_ID = 103647711;
+   <!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+  (function(m,e,t,r,i,k,a){
+      m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+      m[i].l=1*new Date();
+      for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+      k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+  })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=103647711', 'ym');
 
-    ym(COUNTER_ID, 'getClientID', function(clientId) {
-      const tgLink = `https://t.me/${BOT_USERNAME}?start=${clientId}`;
-      window.location.href = tgLink;
-    });
+  ym(103647711, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", accurateTrackBounce:true, trackLinks:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/103647711" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
   </script>
 </head>
 <body>
-  <p>Redirecting...</p>
+<script>
+  const BOT_USERNAME = 'DkptchStageBot'; // тестовый
+  const COUNTER_ID = 103647711; // твой ID счётчика
+
+  ym(COUNTER_ID, 'getClientID', function(clientId) {
+    const params = new URLSearchParams({
+  clientId,
+  utm_source: 'direct',
+  promo: '123'
+});
+const tgLink = `https://t.me/${BOT_USERNAME}?start=${params.toString()}`;
+    window.location.href = tgLink;
+  });
+</script>
+<div>💅</div> 
 </body>
 </html>
