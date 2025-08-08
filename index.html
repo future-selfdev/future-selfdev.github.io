@@ -1,89 +1,20 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Test Yandex Metrika -> local server</title>
-</head>
-<body>
-  <h1>Тест отправки clientId в локальный /send-goal</h1>
-  <p id="status">Ждём clientId...</p>
-  <button id="resend" disabled>Повторно отправить clientId</button>
-
-  <!-- Yandex.Metrika counter -->
-<script type="text/javascript">
-  (function(m,e,t,r,i,k,a){
-      m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-      m[i].l=1*new Date();
-      for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-      k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
-  })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=103647711', 'ym');
-
-  ym(103647711, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", accurateTrackBounce:true, trackLinks:true});
-</script>
-<noscript><div><img src="https://mc.yandex.ru/watch/103647711" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-<!-- /Yandex.Metrika counter -->
-
+  <meta charset="UTF-8">
+  <title>Redirect...</title>
+  <script src="https://mc.yandex.ru/metrika/tag.js"></script>
   <script>
-    const statusEl = document.getElementById('status');
-    const resendBtn = document.getElementById('resend');
-    const ENDPOINT = 'https://localhost:3000/send-goal'; // твой локальный сервер
-    let lastClientId = null;
+    const BOT_USERNAME = 'DkptchStageBot'; // тестовый
+    const COUNTER_ID = 103647711;    // твой ID счётчика
 
-    function sendClientIdToServer(clientId) {
-      const payload = JSON.stringify({ clientId });
-      const blob = new Blob([payload], { type: 'application/json' });
-
-      if (navigator.sendBeacon) {
-        const ok = navigator.sendBeacon(ENDPOINT, blob);
-        console.log('sendBeacon used, ok=', ok);
-        statusEl.textContent = 'Отправлено через sendBeacon (проверь сервер).';
-      } else {
-        // fallback: fetch с keepalive
-        fetch(ENDPOINT, {
-          method: 'POST',
-          body: payload,
-          headers: { 'Content-Type': 'application/json' },
-          keepalive: true
-        }).then(r => {
-          console.log('fetch fallback, status=', r.status);
-          statusEl.textContent = 'Отправлено через fetch (проверь сервер).';
-        }).catch(err => {
-          console.error('Ошибка отправки:', err);
-          statusEl.textContent = 'Ошибка отправки: ' + err;
-        });
-      }
-    }
-
-    // Получаем clientId из ym
-    function obtainAndSendClientId() {
-      try {
-        ym(103647711, 'getClientID', function(clientId) {
-          console.log('got clientId', clientId);
-          lastClientId = clientId;
-          statusEl.textContent = 'clientId получен: ' + clientId;
-          resendBtn.disabled = false;
-          // отправляем автоматически
-          sendClientIdToServer(clientId);
-        });
-      } catch (e) {
-        console.error('ym not ready or error:', e);
-        statusEl.textContent = 'Ошибка: ym недоступен. Убедись, что скрипт метрики загружен и заменил YOUR_COUNTER_ID.';
-      }
-    }
-
-    // Повторная отправка по кнопке
-    resendBtn.addEventListener('click', () => {
-      if (!lastClientId) return;
-      statusEl.textContent = 'Повторная отправка...';
-      sendClientIdToServer(lastClientId);
-    });
-
-    // Ждём загрузки ym и окна
-    window.addEventListener('load', () => {
-      // Небольшая задержка чтобы ym успел загрузиться
-      setTimeout(obtainAndSendClientId, 300);
+    ym(COUNTER_ID, 'getClientID', function(clientId) {
+      const tgLink = `https://t.me/${BOT_USERNAME}?start=${clientId}`;
+      window.location.href = tgLink;
     });
   </script>
+</head>
+<body>
+  <p>Redirecting...</p>
 </body>
 </html>
