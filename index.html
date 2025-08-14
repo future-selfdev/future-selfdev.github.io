@@ -16,23 +16,26 @@
 </script>
 <noscript><div><img src="https://mc.yandex.ru/watch/103647711" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
-  </script>
+  </script> 
 </head>
 <body>
-<script>
+<script> 
   const BOT_USERNAME = 'DkptchStageBot'; // тестовый
   const COUNTER_ID = 103647711; // selfDevRedirect
 
   ym(COUNTER_ID, 'getClientID', function(clientId) {
-    const params = new URLSearchParams({
-  clientId,
-  page: 'selfDevRedirect',
-  promo: '123'
-});
-const tgLink = `https://t.me/${BOT_USERNAME}?start=${encodeURIComponent(params.toString())}`;
+
+    const params = {
+      cId: clientId,
+      page: 3
+    }  
+    const compressed = btoa(JSON.stringify(params)) 
+    
+    const tgLink = `https://t.me/${BOT_USERNAME}?start=${compressed}`;
+ 
     window.location.href = tgLink;
   });
 </script>
 <div>💅</div> 
 </body>
-</html>
+</html> 
